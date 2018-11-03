@@ -19,7 +19,7 @@
         console.log('Hello, World!');
       }
     });</script> -->
-<!-- 
+  <!-- 
 <script>
     AFRAME.registerComponent('radio-toggle', {
       init: function() {
@@ -44,37 +44,153 @@
   
         })
       }
-    });</script> -->
+    });
+  <script>AFRAME.registerComponent('log', {
+      schema: {
+        event: { type: 'string', default: '' },
+        message: { type: 'string', default: 'Hello, World!' }
+      },
+      init: function () {
+        var self = this;
 
-    <!-- https://aframe.io/docs/0.8.0/components/sound.html#pause-and-resume -->
+        this.eventHandlerFn = function () { console.log(self.data.message) }
+      },
+      update: function (oldData) {
+        var data = this.data;
+        var el = this.el;
 
-    <!-- https://jsfiddle.net/fq2pqwfx/2/ -->
-    <!-- https://aframe.io/docs/0.8.0/introduction/writing-a-component.html -->
-    <!-- https://stackoverflow.com/questions/47921013/play-sound-on-click-in-a-frame -->
-    <!-- https://stackoverflow.com/questions/48129947/a-frame-playing-pausing-sound-with-a-custom-a-sound-source -->
-    
-    
-    <script>
-        AFRAME.registerComponent('audiohandler', {
-          init: function() {
-            let playing = false;
-            let audio = document.querySelector("#radioModel");
-            this.el.addEventListener('click', () => {
-              if (!playing) {
-                audio.components.sound.playSound();
-              } else {
-                audio.components.sound.pauseSound();
-                // audio.currentTime = 0;
-              }
-              playing = !playing;
-            });
-          }
-        });</script>
+        if (oldData.event && data.event !== oldData.event) {
+          el.addEventListener(data.event, this.eventHandlerFn);
+        } else {
+          console.log(data.message);
+        }
+      }
+    });</script>
 
 
-  <a-scene light="defaultLightsEnabled: false" sound="src: url(./assets/audio/roomTone.mp3); loop:true; autoplay:true; volume:0.1; positional: false">
+
+  <script>AFRAME.registerComponent('box', {
+      schema: {
+        width: { type: 'number', default: 1 },
+        height: { type: 'number', default: 1 },
+        depth: { type: 'number', default: 1 },
+        color: { type: 'color', default: '#AAA' }
+      },
+
+      init: function () {
+        var data = this.data;
+        var el = this.el;
+        this.geometry = new THREE.BoxBufferGeometry(data.width, data.height, data.depth);
+        this.material = new THREE.MeshStandardMaterial({ color: data.color });
+        this.mesh = new THREE.Mesh(this.geometry, this.material);
+        el.setObject3D('mesh', this.mesh);
+      },
+
+      /**
+       * Update the mesh in response to property updates.
+       */
+      update: function (oldData) {
+        var data = this.data;
+        var el = this.el;
+
+        // If `oldData` is empty, then this means we're in the initialization process.
+        // No need to update.
+        if (Object.keys(oldData).length === 0) { return; }
+
+        // Geometry-related properties changed. Update the geometry.
+        if (data.width !== oldData.width ||
+          data.height !== oldData.height ||
+          data.depth !== oldData.depth) {
+          el.getObject3D('mesh').geometry = new THREE.BoxBufferGeometry(data.width, data.height,
+            data.depth);
+        }
+
+        // Material-related properties changed. Update the material.
+        if (data.color !== oldData.color) {
+          el.getObject3D('mesh').material.color = data.color;
+        }
+      },
+      remove: function () {
+        this.el.removeObject3D('mesh');
+      }
+    });</script></script> -->
+
+  <!-- https://aframe.io/docs/0.8.0/components/sound.html#pause-and-resume -->
+
+  <!-- https://jsfiddle.net/fq2pqwfx/2/ -->
+  <!-- https://aframe.io/docs/0.8.0/introduction/writing-a-component.html -->
+  <!-- https://stackoverflow.com/questions/47921013/play-sound-on-click-in-a-frame -->
+  <!-- https://stackoverflow.com/questions/48129947/a-frame-playing-pausing-sound-with-a-custom-a-sound-source -->
 
 
+  <script>
+    AFRAME.registerComponent('audiohandler', {
+      init: function () {
+        
+      },
+      update: function () {
+        let data = this.data;
+        let el = this.el;
+        let playing = false
+        el.addEventListener('click', () => {
+          console.log(el.components.sound);
+          console.log(el.components.sound.isPlaying);
+          if (playing) {
+            el.components.sound.pauseSound();
+            playing = false
+          } else{
+            el.components.sound.playSound();
+            playing = true
+          } 
+        })
+      }
+      // /**
+      //  * Update the mesh in response to property updates.
+      //  */
+      // update: function (oldData) {
+      //   var data = this.data;
+      //   var el = this.el;
+
+      //   // If `oldData` is empty, then this means we're in the initialization process.
+      //   // No need to update.
+      //   if (Object.keys(oldData).length === 0) { return; }
+
+      //   // Geometry-related properties changed. Update the geometry.
+      //   if (data.width !== oldData.width ||
+      //       data.height !== oldData.height ||
+      //       data.depth !== oldData.depth) {
+      //     el.getObject3D('mesh').geometry = new THREE.BoxBufferGeometry(data.width, data.height,
+      //                                                                   data.depth);
+      //   }
+
+      //   // Material-related properties changed. Update the material.
+      //   if (data.color !== oldData.color) {
+      //     el.getObject3D('mesh').material.color = data.color;
+      //   }
+      // }
+
+
+      //         init: function() {
+      //           let playing = false;
+      //           let audio = document.querySelector("#radioModel");
+      //           this.el.addEventListener('click', () => {
+      //             if (!playing) {
+      //               audio.components.sound.playSound();
+      //             } else {
+      //               audio.components.sound.pauseSound();
+      //               // audio.currentTime = 0;
+      //             }
+      //             playing = !playing;
+      //           });
+      //         }
+    });</script>
+
+
+
+
+  <a-scene light="defaultLightsEnabled: false" sound="src: url(./assets/audio/roomTone.mp3); loop:true; autoplay:false; volume:0.1; positional: false">
+
+    <a-entity log="event: anEvent; message: Hello, Frameverse!"></a-entity>
 
     <!-- Assets -->
     <a-assets>
@@ -109,8 +225,8 @@
       <a-entity gltf-model="#coffeeMaker" position="-1.9684428347397913 0.6611165318954533 1.0480361652323253" rotation="0 180 0"
         scale="0.8 0.8 0.8" sound="src: #espressoMachine; volume: 1; on: click"></a-entity>
       <a-entity gltf-model="#emptyMug" position="-1.9 0.7 0.9" rotation="0 55 0" scale="0.75 0.75 0.75"></a-entity>
-      <a-entity id="#radioModel" audiohandler sound="src: #music; volume: 1" gltf-model="#radio" position="-2.210357318137207 0.3718644106385657 1.1893210652598343" rotation="0 45 0"
-        scale="0.3 0.3 0.3"></a-entity>
+      <a-entity audiohandler sound="src: #music; volume: 1;autoplay:false" gltf-model="#radio" position="-2.210357318137207 0.3718644106385657 1.1893210652598343"
+        rotation="0 45 0" scale="0.3 0.3 0.3"></a-entity>
       <a-entity gltf-model="#plate" position="-2.324908935706603 0.6607899348542932 1.4208847524749022" scale="0.25 0.25 0.25"></a-entity>
       <a-entity gltf-model="#toast" position="-2.355316493011995 0.7161907695660004 1.617143421798886" rotation="-90 0 0"
         scale="0.1 0.1 0.1"></a-entity>
