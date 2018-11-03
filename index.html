@@ -124,24 +124,37 @@
 
 
   <script>
-    AFRAME.registerComponent('audiohandler', {
-      init: function () {
-        
-      },
+    AFRAME.registerComponent('audio-toggle', {
+
+      // init: function () {
+      //   let data = this.data
+      //   let el = this.el
+      //   console.log(el.components.sound);
+      //   console.log(data);
+      //   // Autoplay on Start
+      //   if (data.playing === "true") {
+      //       }
+      // },
       update: function () {
-        let data = this.data;
-        let el = this.el;
-        let playing = false
+        let data = this.data
+        let el = this.el
+        let playing
+
+        if (data.playing === "true") {
+          playing = true
+          el.components.sound.playSound();
+        } else {
+          playing = false
+        }
         el.addEventListener('click', () => {
-          console.log(el.components.sound);
           console.log(el.components.sound.isPlaying);
           if (playing) {
             el.components.sound.pauseSound();
             playing = false
-          } else{
+          } else {
             el.components.sound.playSound();
             playing = true
-          } 
+          }
         })
       }
       // /**
@@ -188,7 +201,7 @@
 
 
 
-  <a-scene light="defaultLightsEnabled: false" sound="src: url(./assets/audio/roomTone.mp3); loop:true; autoplay:false; volume:0.1; positional: false">
+  <a-scene light="defaultLightsEnabled: false" sound="src: url(./assets/audio/roomTone.wav); loop:true; autoplay:false; volume:0.5; positional: false">
 
     <a-entity log="event: anEvent; message: Hello, Frameverse!"></a-entity>
 
@@ -198,7 +211,7 @@
       <audio id="espressoMachine" src="./assets/audio/espressoMachine.wav"></audio>
       <audio id="toaster" src="./assets/audio/toaster.wav"></audio>
       <audio id="bottle" src="./assets/audio/bottle.wav"></audio>
-      <audio id="music" src="./assets/audio/Tom Jobim - Children's Games.mp3"></audio>
+      <audio id="music" src="./assets/audio/Tom Jobim - Children's Games.mp3" preload></audio>
 
 
       <!-- Models -->
@@ -224,15 +237,23 @@
     <a-entity gltf-model="#kitchen" position="-2.6 0.5 -2.5" rotation="0 141 0">
       <a-entity gltf-model="#coffeeMaker" position="-1.9684428347397913 0.6611165318954533 1.0480361652323253" rotation="0 180 0"
         scale="0.8 0.8 0.8" sound="src: #espressoMachine; volume: 1; on: click"></a-entity>
+
       <a-entity gltf-model="#emptyMug" position="-1.9 0.7 0.9" rotation="0 55 0" scale="0.75 0.75 0.75"></a-entity>
-      <a-entity audiohandler sound="src: #music; volume: 1;autoplay:false" gltf-model="#radio" position="-2.210357318137207 0.3718644106385657 1.1893210652598343"
-        rotation="0 45 0" scale="0.3 0.3 0.3"></a-entity>
+
+      <!-- Have to call the handler component last to make sure sound source is attached to the entity -->
+      <a-entity sound="src: #music; volume: 1;autoplay:false" gltf-model="#radio" position="-2.210357318137207 0.3718644106385657 1.1893210652598343"
+        rotation="0 45 0" scale="0.3 0.3 0.3" audio-toggle="playing: false"></a-entity>
+
       <a-entity gltf-model="#plate" position="-2.324908935706603 0.6607899348542932 1.4208847524749022" scale="0.25 0.25 0.25"></a-entity>
+
       <a-entity gltf-model="#toast" position="-2.355316493011995 0.7161907695660004 1.617143421798886" rotation="-90 0 0"
         scale="0.1 0.1 0.1"></a-entity>
+
       <a-entity gltf-model="#toast" position="-2.32 0.728 1.617143421798886" rotation="-90 0 0" scale="0.1 0.1 0.1"></a-entity>
+
       <a-entity gltf-model="#pan" position="-2.7954648137092604 0.3479408442703882 1.3724892368539716" rotation="0 90 0"
         scale="0.15 0.15 0.15"></a-entity>
+
       <a-entity gltf-model="#egg" position="-2.9991899674434763 0.7066393732063021 1.3617704499187389" scale="0.025 0.025 0.025"></a-entity>
 
 
@@ -245,11 +266,11 @@
       <a-cylinder material="opacity:0" position="-3.1 0.7 1.5" rotation="0 0 0" scale="0.25 0.25 0.25" sound="src: #bottle; volume: 1; on: click"></a-cylinder>
 
 
-
-
-
     </a-entity>
     <!-- END KITCHEN MODEL -->
+
+
+
 
     <!-- Camera -->
     <a-entity position="0 1.5 0" camera wasd-controls look-controls="pointerLockEnabled: true">
