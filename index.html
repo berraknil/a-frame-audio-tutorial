@@ -125,7 +125,9 @@
 
   <script>
     AFRAME.registerComponent('audio-toggle', {
-
+      schema: {
+        playing: { type: "boolean", default: false }
+      },
       // init: function () {
       //   let data = this.data
       //   let el = this.el
@@ -138,9 +140,9 @@
       update: function () {
         let data = this.data
         let el = this.el
-        let playing
+        let playing = el.components.sound.isPlaying
 
-        if (data.playing === "true") {
+        if (data.playing === true) {
           playing = true
           el.components.sound.playSound();
         } else {
@@ -211,7 +213,7 @@
       <audio id="espressoMachine" src="./assets/audio/espressoMachine.wav"></audio>
       <audio id="toaster" src="./assets/audio/toaster.wav"></audio>
       <audio id="bottle" src="./assets/audio/bottle.wav"></audio>
-      <audio id="music" src="./assets/audio/Tom Jobim - Children's Games.mp3" preload></audio>
+      <audio id="music" src="./assets/audio/Tom Jobim - Children's Games.mp3"></audio>
 
 
       <!-- Models -->
