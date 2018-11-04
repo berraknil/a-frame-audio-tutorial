@@ -10,37 +10,12 @@
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script
       src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.0.2/dist/aframe-extras.min.js"></script>
+    <script
+      src="./audio-toggle.js"></script>
+    
   </head>
 
   <body>
-
-    <script>
-    AFRAME.registerComponent('audio-toggle', {
-      schema: {
-        playing: {
-          type: "boolean",
-          default: false
-        }
-      },
-      update: function () {
-        let data = this.data
-        let el = this.el
-        let playing = data.playing
-
-        if (playing === true) {
-          el.components.sound.playSound();
-        }
-        el.addEventListener('click', () => {
-          if (playing) {
-            el.components.sound.pauseSound();
-            playing = false
-          } else {
-            el.components.sound.playSound();
-            playing = true
-          }
-        })
-      }
-    });</script>
     <a-scene light="defaultLightsEnabled: false" sound="src:
       url(./assets/audio/room_tone.wav); loop:true; autoplay:true; volume:0.3;
       positional: false">
@@ -144,16 +119,8 @@
 
       </a-entity>
 
-      <!-- 
-    <a-plane color="white" rotation="-90 0 0" position="0 0.8 0" width="10" height="10"></a-plane>
-
-    <a-sky color="grey"></a-sky> -->
     </a-scene>
 
-
-
-
   </body>
-
 
 </html>
