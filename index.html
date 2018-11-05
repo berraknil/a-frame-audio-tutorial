@@ -10,8 +10,7 @@
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script
       src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.0.2/dist/aframe-extras.min.js"></script>
-    <script
-      src="./audio-toggle.js"></script>
+    <script src="./audio-toggle.js"></script>
 
   </head>
 
@@ -20,7 +19,6 @@
       url(./assets/audio/room_tone.wav); loop:true; autoplay:false; volume:0.3;
       positional: false">
 
-      <a-entity log="event: anEvent; message: Hello, Frameverse!"></a-entity>
       <!-- Assets -->
       <a-assets>
         <!-- Audio Assets -->
@@ -57,9 +55,8 @@
       <a-entity gltf-model="#kitchen" position="-2.6 0.5 -2.5" rotation="0 141
         0">
         <a-entity gltf-model="#coffeeMaker" position="-1.9684428347397913
-          0.6611165318954533 1.0480361652323253"
-          rotation="0 180 0" scale="0.8 0.8 0.8" sound="src: #espressoMachine;
-          volume: 1; on:
+          0.6611165318954533 1.0480361652323253" rotation="0 180 0"
+          scale="0.8 0.8 0.8" sound="src: #espressoMachine; volume: 1; on:
           click"></a-entity>
 
         <a-entity gltf-model="#emptyMug" position="-1.9 0.7 0.9" rotation="0 55
@@ -90,10 +87,12 @@
 
 
         <!-- Use A-Sound for Toaster Sound -->
-        <a-sound material="opacity:0" geometry="primitive:box" position="-2.462499157447982 0.6965322746993741 1.5274928265267584" scale="0.1506890364560154 0.1506890364560154 0.1506890364560154" src="src: url(./assets/audio/toaster.mp3)"
-          on="click"></a-sound>
+        <a-sound material="opacity:0" geometry="primitive:box"
+          position="-2.462499157447982 0.6965322746993741 1.5274928265267584"
+          scale="0.1506890364560154 0.1506890364560154 0.1506890364560154"
+          src="src: url(./assets/audio/toaster.mp3)" on="click"></a-sound>
 
-       
+
 
         <!-- Use a Primitive for Bottle Sound -->
         <a-cylinder material="opacity:0" position="-3.148809863372215 0.7
