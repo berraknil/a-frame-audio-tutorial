@@ -15,9 +15,7 @@
   </head>
 
   <body>
-    <a-scene light="defaultLightsEnabled: false" sound="src:
-      url(./assets/audio/room_tone.wav); loop:true; autoplay:true; volume:0.3;
-      positional: false">
+    <a-scene light="defaultLightsEnabled: false">
 
       <!-- Assets -->
       <a-assets>
@@ -25,7 +23,7 @@
         <audio id="espressoMachine" src="./assets/audio/espresso_machine.mp3"></audio>
         <audio id="toaster" src="./assets/audio/toaster.mp3"></audio>
         <audio id="bottle" src="./assets/audio/bottle.mp3"></audio>
-        <audio id="music" src="./assets/audio/music.mp3"></audio>
+        <audio id="music" src="./assets/audio/mellow_bossa.mp3"></audio>
         <audio id="fryingEgg" src="./assets/audio/frying_egg.mp3"></audio>
 
 
@@ -54,18 +52,18 @@
       <!-- KITCHEN MODEL -->
       <a-entity gltf-model="#kitchen" position="-2.6 0.5 -2.5" rotation="0 141
         0">
-        <a-entity gltf-model="#coffeeMaker" position="-1.9684428347397913
+        <a-entity
+          gltf-model="#coffeeMaker" position="-1.9684428347397913
           0.6611165318954533 1.0480361652323253" rotation="0 180 0"
-          scale="0.8 0.8 0.8" sound="src: #espressoMachine; volume: 1; on:
-          click"></a-entity>
+          scale="0.8 0.8 0.8"></a-entity>
 
         <a-entity gltf-model="#emptyMug" position="-1.9 0.7 0.9" rotation="0 55
           0" scale="0.75 0.75 0.75"></a-entity>
 
-        <!-- Have to call the handler component last to make sure sound source is attached to the entity -->
-        <a-entity sound="src: #music; volume: 1" gltf-model="#radio"
+        <a-entity gltf-model="#radio"
           position="-2.210357318137207 0.3718644106385657 1.1893210652598343"
-          rotation="0 45 0" scale="0.3 0.3 0.3" audio-toggle="playing: true"></a-entity>
+          rotation="0 45 0" scale="0.3 0.3 0.3"></a-entity>
+
         <a-entity gltf-model="#plate" position="-2.324908935706603
           0.6607899348542932 1.4208847524749022" scale="0.25 0.25 0.25"></a-entity>
         <a-entity gltf-model="#toast" position="-2.355316493011995
@@ -79,27 +77,9 @@
           0.3479408442703882 1.3724892368539716"
           rotation="0 90 0" scale="0.15 0.15 0.15"></a-entity>
 
-        <a-entity gltf-model="#egg" sound="src: #fryingEgg; volume: .5;
-          rolloffFactor: 2; refDistance: .5; on:click"
+        <a-entity gltf-model="#egg"
           position="-2.9991899674434763 0.7066393732063021 1.3617704499187389"
           scale="0.025 0.025 0.025"></a-entity>
-
-
-
-        <!-- Use A-Sound for Toaster Sound -->
-        <a-sound material="opacity:0" geometry="primitive:box"
-          position="-2.462499157447982 0.6965322746993741 1.5274928265267584"
-          scale="0.1506890364560154 0.1506890364560154 0.1506890364560154"
-          src="src: url(./assets/audio/toaster.mp3)" on="click"></a-sound>
-
-
-
-        <!-- Use a Primitive for Bottle Sound -->
-        <a-cylinder material="opacity:0" position="-3.148809863372215 0.7
-          1.570017171086842" scale="0.036 0.36 0.069"
-          sound="src: #bottle;
-          volume: 1; on: click"></a-cylinder>
-
 
       </a-entity>
       <!-- END KITCHEN MODEL -->
